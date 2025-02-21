@@ -17,7 +17,7 @@ export class GetTransactionsOutputDto {
     id: number;
 
     @ApiProperty({ description: 'Transaction type (Buy/Sell)' })
-    name: string;
+    txType: string;
 
     @ApiProperty({ description: 'Transaction hash' })
     txHash: string;

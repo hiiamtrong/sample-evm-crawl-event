@@ -73,7 +73,7 @@ export class TransactionService {
             }
             return {
                 id: transaction.id,
-                name: transaction.txType,
+                txType: transaction.txType,
                 txHash: transaction.txHash,
                 from: transaction.from,
                 to: transaction.to,
