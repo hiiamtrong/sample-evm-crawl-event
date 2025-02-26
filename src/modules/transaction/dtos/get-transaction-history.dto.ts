@@ -1,12 +1,13 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsString } from "class-validator";
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
+import { IsNotEmpty, IsOptional, IsString } from "class-validator";
 import { BuyEvent } from "src/modules/crawler/models/buy-event.model";
 
 export class GetTransactionsInputDto {
-    @ApiProperty({ description: 'The address to get transactions for' })
+    @ApiPropertyOptional({ description: 'The address to get transactions for' })
     @IsString()
     @IsNotEmpty()
-    address: string;
+    @IsOptional()
+    address?: string;
 }
 
 

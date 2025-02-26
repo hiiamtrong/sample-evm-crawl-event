@@ -45,10 +45,14 @@ export class TransactionService {
     async getTransactions(query: GetTransactionsInputDto, pagination: PaginationParamsDto) {
         const { page, limit } = pagination;
         const { address } = query;
+        let cond = {}
+        if (query.address) {
+            cond = {
+                from: query.address,
+            }
+        }
         const transactions = await this.transactionRepository.find({
-            where: {
-                from: address,
-            },
+            where: cond,
             skip: page * limit,
             take: limit,
             order: {
@@ -57,9 +61,7 @@ export class TransactionService {
         });
 
         const total = await this.transactionRepository.count({
-            where: {
-                from: address,
-            },
+            where: cond,
         });
         const transactionsOutput: GetTransactionsOutputDto[] = transactions.map((transaction) => {
             let data: BuyEvent;
