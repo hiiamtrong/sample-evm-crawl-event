@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { BlockchainModule } from 'src/modules/blockchain/blockchain.module';
-import { BuyCrawler } from 'src/modules/crawler/runners/buy.crawler';
+
+import { EventCrawler } from 'src/modules/crawler/runners/event.crawler';
 import { SharedModule } from 'src/shared/shared.module';
 
 @Module({
@@ -8,7 +9,7 @@ import { SharedModule } from 'src/shared/shared.module';
     SharedModule,
     BlockchainModule,
   ],
-  providers: [BuyCrawler],
-  exports: [BuyCrawler],
+  providers: [EventCrawler],
+  exports: [EventCrawler],
 })
 export class CrawlerModule { }

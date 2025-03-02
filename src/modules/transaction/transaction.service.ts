@@ -7,6 +7,7 @@ import { TransactionEntity } from "./entities/transaction.entity";
 import { GetTransactionsInputDto, GetTransactionsOutputDto } from "src/modules/transaction/dtos/get-transaction-history.dto";
 import { PaginationParamsDto } from "src/shared/dtos/pagination-params.dto";
 import { BuyEvent } from "src/modules/crawler/models/buy-event.model";
+import { RefundEvent } from "src/modules/crawler/models/refund-event.model";
 @Injectable()
 export class TransactionService {
     private readonly logger = new Logger(TransactionService.name);
@@ -25,6 +26,7 @@ export class TransactionService {
             },
         });
         if (transaction) {
+            this.logger.log(`Transaction already exists: event: ${name}, txHash: ${txHash}`);
             return;
         }
         const newTransaction = new TransactionEntity();
@@ -44,7 +46,6 @@ export class TransactionService {
 
     async getTransactions(query: GetTransactionsInputDto, pagination: PaginationParamsDto) {
         const { page, limit } = pagination;
-        const { address } = query;
         let cond = {}
         if (query.address) {
             cond = {
@@ -64,11 +65,23 @@ export class TransactionService {
             where: cond,
         });
         const transactionsOutput: GetTransactionsOutputDto[] = transactions.map((transaction) => {
-            let data: BuyEvent;
+            let data: BuyEvent | RefundEvent;
             switch (transaction.txType) {
                 case EEvent.BUY:
                     data = {
                         from: transaction.data[0],
+                        amount: transaction.data[1],
+                    }
+                    break;
+                case EEvent.REFUND:
+                    data = {
+                        user: transaction.data[0],
+                        amount: transaction.data[1],
+                    }
+                    break;
+                case EEvent.CLAIM:
+                    data = {
+                        user: transaction.data[0],
                         amount: transaction.data[1],
                     }
                     break;

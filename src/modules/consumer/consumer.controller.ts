@@ -21,6 +21,6 @@ export class ConsumerController {
         const partition = context.getPartition();
         const topic = context.getTopic();
         const consumer = context.getConsumer();
-        await consumer.commitOffsets([{ topic, partition, offset }]);
+        await consumer.commitOffsets([{ topic, partition, offset: `${Number(offset) + 1}` }]);
     }
 }

@@ -1,6 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsNotEmpty, IsOptional, IsString } from "class-validator";
 import { BuyEvent } from "src/modules/crawler/models/buy-event.model";
+import { RefundEvent } from "src/modules/crawler/models/refund-event.model";
 
 export class GetTransactionsInputDto {
     @ApiPropertyOptional({ description: 'The address to get transactions for' })
@@ -45,7 +46,7 @@ export class GetTransactionsOutputDto {
     blockNumber: number;
 
     @ApiProperty({ description: 'Additional transaction data' })
-    data: BuyEvent;
+    data: BuyEvent | RefundEvent;
 }
 
 

@@ -1,3 +1,5 @@
+import { EEvent } from "src/modules/crawler/models/base-event.model";
+
 export const BLOCKCHAIN_GROUP_ID = 'blockchain-microservice';
 
 export const BLOCKCHAIN_MICROSERVICE = 'blockchain-microservice';

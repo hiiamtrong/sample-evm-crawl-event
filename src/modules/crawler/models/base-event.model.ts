@@ -1,6 +1,7 @@
 export enum EEvent {
     BUY = 'BuyEvent',
-    SELL = 'SellEvent',
+    REFUND = 'RefundEvent',
+    CLAIM = 'ClaimEvent',
 }
 
 export class BaseEvent {

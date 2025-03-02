@@ -12,7 +12,7 @@ import { EEvent } from 'src/modules/crawler/models/base-event.model';
 import { AppConfigService } from 'src/modules/configs/config.service';
 
 @Injectable()
-export class BuyCrawler extends BaseEventCrawler {
+export class EventCrawler extends BaseEventCrawler {
 
   constructor(
     @InjectRedis()
@@ -27,7 +27,7 @@ export class BuyCrawler extends BaseEventCrawler {
     const incrementBlock = appConfig.contract.incrementBlock;
     const chainId = appConfig.contract.chainId;
     const contractAddress = appConfig.contract.address;
-    const eventName = EEvent.BUY;
+    const eventNames = [EEvent.REFUND, EEvent.CLAIM, EEvent.BUY];
 
     const crawlerConfig = new CrawlerEventConfig(
       'src/shared/abis/Dao4BuildPresale.json',
@@ -35,9 +35,9 @@ export class BuyCrawler extends BaseEventCrawler {
       contractAddress,
       incrementBlock,
       chainId,
-      eventName,
+      eventNames,
     );
-    const logger = new Logger(BuyCrawler.name);
+    const logger = new Logger(EventCrawler.name);
 
     super(
       redis,

@@ -6,7 +6,7 @@ export class CrawlerEventConfig {
   contractAddress: string;
   incrementBlock: number;
   chainId: string;
-  eventName: EEvent;
+  eventName: EEvent[];
 
   constructor(
     abiPath: string,
@@ -14,14 +14,14 @@ export class CrawlerEventConfig {
     contractAddress: string,
     incrementBlock: number,
     chainId: string,
-    eventName: EEvent,
+    eventNames: EEvent[],
   ) {
     this.abiPath = abiPath;
     this.startBlock = startBlock;
     this.contractAddress = contractAddress;
     this.incrementBlock = incrementBlock;
     this.chainId = chainId;
-    this.eventName = eventName;
+    this.eventName = eventNames;
   }
 }
 
